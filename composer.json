@@ -1,0 +1,19 @@
+{
+  "name": "yjtec/cloud",
+  "description": "laravel cloud",
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+    "name": "kidkang",
+    "email": "723616880@qq.com"
+  }],
+  "autoload": {
+    "psr-4": {
+      "YjtecCloud\\Client\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "hprose/hprose": "dev-master"
+  }
+}
