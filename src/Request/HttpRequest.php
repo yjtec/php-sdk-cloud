@@ -1,14 +1,11 @@
 <?php
 namespace YjtecCloud\Client\Request;
-use Hprose\Socket\Client;
-class RpcRequest extends Request
+
+class HttpRequest extends Request
 {
-/**
- * @throws ClientException
- * @throws Exception
- */
     protected function response()
     {
+
         $action  = $this->action;
         $client  = $this->createClient($this);
         $options = $this->options;
@@ -20,10 +17,5 @@ class RpcRequest extends Request
         } catch (\Exception $exception) {
             //var_dump($exception);
         }
-    }
-
-    public function createClient(Request $request)
-    {
-        return new Client($request->config['uri'], false);
     }
 }
