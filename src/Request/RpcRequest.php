@@ -1,13 +1,17 @@
 <?php
 namespace YjtecCloud\Client\Request;
 use Hprose\Socket\Client;
+use YjtecCloud\Client\Traits\DetectsLostConnections;
 class RpcRequest extends Request
 {
+    use DetectsLostConnections;
 /**
  * @throws ClientException
  * @throws Exception
  */
     private $clients;
+    private $tryAgainTimes = 2 ;
+    private $tryAgainStmp = 0;
     protected function response()
     {
         $action  = $this->action;
@@ -18,8 +22,8 @@ class RpcRequest extends Request
                 return $client->{$this->prefix}->$action(...$options);
             }
             return $client->$action(...$options);
-        } catch (\Exception $exception) {
-            var_dump($exception->getMessage());
+        } catch (\Exception $e) {
+            return $this->tryAgain($e);
         }
     }
 
@@ -32,6 +36,15 @@ class RpcRequest extends Request
             $client =  new Client($request->config['uri'], false);
             $this->clients[md5($request->config['uri'])] = $client;
             return $client;
+        }
+    }
+
+    public function tryAgain(\Exception $e){
+        if($this->causedByLostConnection($e) && $this->tryAgainStmp < $this->tryAgainTimes ){
+            $this->tryAgainStmp ++;
+            return $this->response();
+        }else{
+            throw $e;
         }
     }
 }
