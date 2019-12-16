@@ -29,7 +29,10 @@ class RpcRequest extends Request
 
     public function createClient(Request $request)
     {
-        if($this->clients[md5($request->config['uri'])]){
+        if(
+            isset($this->clients[md5($request->config['uri'])]) && 
+            $this->clients[md5($request->config['uri'])] 
+        ){
             return $this->clients[md5($request->config['uri'])];
             
         }else{
