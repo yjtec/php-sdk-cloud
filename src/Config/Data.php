@@ -20,5 +20,17 @@ return [
     ],
     'pano' => [
         'uri' => 'tcp://0.0.0.0:10006'
-    ]
+    ],
+    'vryUcenter' => [
+        'uri' => 'tcp://0.0.0.0:10001',
+    ],
+    'vryEditapi' => [
+        'uri' => 'tcp://0.0.0.0:10002',
+    ],
+    'vryMsgcenter' => [
+        'uri' => 'tcp://0.0.0.0:10003',
+    ],
+    'vryNcenter' => [
+        'uri' => 'tcp://0.0.0.0:10004',
+    ],
 ];
